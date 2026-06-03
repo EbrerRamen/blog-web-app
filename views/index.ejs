@@ -1,0 +1,153 @@
+<% const pageTitle = 'All posts'; const activeNav = 'home'; %>
+<%- include("partials/header.ejs") %>
+
+<section class="page-hero container py-4 py-lg-5">
+    <div class="row align-items-end g-4">
+        <div class="col-lg-8">
+            <p class="page-eyebrow mb-2">Your writing space</p>
+            <h1 class="page-title mb-3">All posts</h1>
+            <p class="page-lead mb-0">Create, edit, and manage blog posts in one place.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+            <a href="/create" class="btn btn-primary btn-lg px-4">
+                <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>Create new post
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="card border-0 shadow-sm search-toolbar mb-4">
+        <div class="card-body p-3 p-md-4">
+            <form action="/" method="GET" class="search-form" role="search" aria-label="Search and filter posts">
+                <div class="row g-3 align-items-end">
+                    <div class="col-lg-5">
+                        <label for="search-q" class="form-label fw-semibold small mb-1">Search</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white" id="search-icon">
+                                <i class="bi bi-search text-muted" aria-hidden="true"></i>
+                            </span>
+                            <input type="search" class="form-control" id="search-q" name="q"
+                                value="<%= q %>" placeholder="Search by title or content…"
+                                aria-describedby="search-icon">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <label for="search-field" class="form-label fw-semibold small mb-1">Search in</label>
+                        <select class="form-select" id="search-field" name="field" aria-label="Search field">
+                            <option value="all"<%= field === 'all' ? ' selected' : '' %>>Title &amp; content</option>
+                            <option value="title"<%= field === 'title' ? ' selected' : '' %>>Title only</option>
+                            <option value="content"<%= field === 'content' ? ' selected' : '' %>>Content only</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-lg-2">
+                        <label for="search-sort" class="form-label fw-semibold small mb-1">Sort by</label>
+                        <select class="form-select" id="search-sort" name="sort" aria-label="Sort order">
+                            <option value="newest"<%= sort === 'newest' ? ' selected' : '' %>>Newest first</option>
+                            <option value="oldest"<%= sort === 'oldest' ? ' selected' : '' %>>Oldest first</option>
+                            <option value="title-az"<%= sort === 'title-az' ? ' selected' : '' %>>Title A–Z</option>
+                            <option value="title-za"<%= sort === 'title-za' ? ' selected' : '' %>>Title Z–A</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1">
+                            <i class="bi bi-funnel me-1" aria-hidden="true"></i>Apply
+                        </button>
+                        <% if (hasFilters) { %>
+                            <a href="/" class="btn btn-outline-secondary" title="Clear search and filters">
+                                <i class="bi bi-x-lg" aria-hidden="true"></i>
+                                <span class="visually-hidden">Clear</span>
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            </form>
+            <% if (hasFilters && totalPosts > 0) { %>
+                <p class="search-results-meta mb-0 mt-3 small text-muted">
+                    Showing <strong><%= posts.length %></strong> of <strong><%= totalPosts %></strong> post<%= totalPosts === 1 ? '' : 's' %>
+                    <% if (q) { %> matching &ldquo;<span class="text-body"><%= q %></span>&rdquo;<% } %>
+                </p>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<section class="container pb-5">
+    <% if (totalPosts === 0) { %>
+        <div class="empty-state card border-0 shadow-sm text-center py-5 px-4">
+            <div class="empty-state-icon mx-auto mb-3" aria-hidden="true">
+                <i class="bi bi-journal-plus"></i>
+            </div>
+            <h2 class="h4 mb-2">No posts yet</h2>
+            <p class="text-muted mb-4 mx-auto" style="max-width: 28rem;">
+                Share your first story. Posts are stored in memory for this demo—refresh the server to reset.
+            </p>
+            <a href="/create" class="btn btn-primary">
+                <i class="bi bi-pencil-square me-2" aria-hidden="true"></i>Write your first post
+            </a>
+        </div>
+    <% } else if (posts.length === 0) { %>
+        <div class="empty-state card border-0 shadow-sm text-center py-5 px-4">
+            <div class="empty-state-icon mx-auto mb-3" aria-hidden="true">
+                <i class="bi bi-search"></i>
+            </div>
+            <h2 class="h4 mb-2">No matching posts</h2>
+            <p class="text-muted mb-4 mx-auto" style="max-width: 28rem;">
+                Nothing matched your search or filters. Try different keywords or clear the filters.
+            </p>
+            <a href="/" class="btn btn-primary">
+                <i class="bi bi-x-circle me-2" aria-hidden="true"></i>Clear search &amp; filters
+            </a>
+        </div>
+    <% } else { %>
+        <div class="row g-4">
+            <% posts.forEach(post => { %>
+                <% const preview = truncatePreview(post.content); %>
+                <div class="col-md-6 col-xl-4">
+                    <article class="card post-card h-100 border-0 shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <h2 class="card-title h5 mb-1">
+                                <a href="/post/<%= post.id %>" class="post-title-link text-decoration-none">
+                                    <%= post.title %>
+                                </a>
+                            </h2>
+                            <% if (post.createdAt) { %>
+                                <time class="post-date d-block mb-2" datetime="<%= post.createdAt %>">
+                                    <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>
+                                    <%= formatDate(post.createdAt) %>
+                                </time>
+                            <% } %>
+                            <p class="card-text text-muted post-excerpt flex-grow-1 mb-2">
+                                <%= preview.preview %>
+                            </p>
+                            <% if (preview.isTruncated) { %>
+                                <a href="/post/<%= post.id %>" class="read-more-link fw-semibold mb-3 position-relative">
+                                    Read more
+                                    <i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
+                                </a>
+                            <% } else { %>
+                                <div class="mb-3"></div>
+                            <% } %>
+                            <div class="d-flex flex-wrap align-items-center gap-2 mt-auto pt-2 border-top post-card-actions">
+                                <a href="/edit/<%= post.id %>" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
+                                </a>
+                                <form action="/delete/<%= post.id %>" method="POST" class="d-inline m-0"
+                                    onsubmit="return confirm('Delete this post? This cannot be undone.');">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-trash me-1" aria-hidden="true"></i>Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            <% }) %>
+        </div>
+        <p class="text-center text-muted small mt-4 mb-0">
+            <%= posts.length %> post<%= posts.length === 1 ? '' : 's' %><% if (hasFilters && posts.length !== totalPosts) { %> (filtered)<% } %>
+        </p>
+    <% } %>
+</section>
+
+<%- include("partials/footer.ejs") %>

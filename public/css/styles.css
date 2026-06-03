@@ -1,0 +1,235 @@
+/* Theme tokens — align with Bootstrap, avoid fighting utility classes */
+:root {
+    --ink-primary: #1e3a5f;
+    --ink-primary-dark: #152a45;
+    --ink-accent: #3d7ea6;
+    --ink-surface: #f6f8fb;
+    --ink-card: #ffffff;
+    --ink-text: #1a2332;
+    --ink-muted: #5c6b7a;
+    --ink-border: #e2e8f0;
+    --ink-radius: 0.625rem;
+    --ink-radius-lg: 0.75rem;
+    --ink-shadow: 0 0.125rem 0.75rem rgba(30, 58, 95, 0.08);
+    --ink-font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+    --ink-font-serif: "Source Serif 4", Georgia, serif;
+
+    --bs-primary: var(--ink-primary);
+    --bs-primary-rgb: 30, 58, 95;
+    --bs-body-font-family: var(--ink-font-sans);
+    --bs-body-color: var(--ink-text);
+    --bs-body-bg: var(--ink-surface);
+    --bs-border-color: var(--ink-border);
+    --bs-link-color: var(--ink-accent);
+    --bs-link-hover-color: var(--ink-primary-dark);
+    --bs-border-radius: var(--ink-radius);
+    --bs-border-radius-lg: 0.75rem;
+}
+
+body {
+    background-color: var(--ink-surface);
+    color: var(--ink-text);
+}
+
+/* Navbar */
+.site-navbar {
+    background: linear-gradient(135deg, var(--ink-primary) 0%, var(--ink-primary-dark) 100%) !important;
+}
+
+.site-navbar .navbar-brand {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.site-navbar .nav-link.active {
+    font-weight: 600;
+}
+
+.site-navbar .btn-light {
+    font-weight: 600;
+    color: var(--ink-primary);
+}
+
+.site-navbar .btn-light:hover {
+    background-color: #fff;
+    color: var(--ink-primary-dark);
+}
+
+.site-navbar .active-nav-btn {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Typography */
+.page-eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-accent);
+}
+
+.page-title {
+    font-family: var(--ink-font-serif);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink-text);
+    line-height: 1.2;
+}
+
+.page-lead {
+    font-size: 1.125rem;
+    color: var(--ink-muted);
+    max-width: 36rem;
+}
+
+/* Search & filter toolbar */
+.search-toolbar {
+    background: var(--ink-card);
+    border-radius: var(--ink-radius-lg) !important;
+}
+
+.search-toolbar .form-control:focus,
+.search-toolbar .form-select:focus {
+    border-color: var(--ink-accent);
+    box-shadow: 0 0 0 0.2rem rgba(61, 126, 166, 0.2);
+}
+
+.search-toolbar .input-group-text {
+    border-color: var(--ink-border);
+    color: var(--ink-muted);
+}
+
+.search-results-meta strong {
+    color: var(--ink-text);
+    font-weight: 600;
+}
+
+/* Cards */
+.post-card,
+.form-card,
+.empty-state {
+    background: var(--ink-card);
+    border-radius: var(--ink-radius-lg) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ink-shadow), 0 0.5rem 1.5rem rgba(30, 58, 95, 0.12) !important;
+}
+
+.post-card .card-title {
+    font-family: var(--ink-font-serif);
+    font-weight: 600;
+}
+
+.post-title-link {
+    color: var(--ink-text);
+    transition: color 0.15s ease;
+}
+
+.post-title-link:hover {
+    color: var(--ink-accent);
+}
+
+.read-more-link {
+    font-size: 0.9375rem;
+    color: var(--ink-accent);
+    text-decoration: none;
+    width: fit-content;
+}
+
+.read-more-link:hover {
+    color: var(--ink-primary-dark);
+    text-decoration: underline;
+}
+
+.post-date {
+    font-size: 0.8125rem;
+    color: var(--ink-muted);
+}
+
+.post-date time {
+    font-weight: 500;
+}
+
+.post-excerpt {
+    line-height: 1.6;
+    font-size: 0.9375rem;
+}
+
+.post-detail-card,
+.post-detail-card .page-title {
+    font-family: var(--ink-font-serif);
+}
+
+.post-body {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--ink-text);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Empty state */
+.empty-state-icon {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(30, 58, 95, 0.08);
+    color: var(--ink-primary);
+    font-size: 1.75rem;
+}
+
+/* Forms — only enhance Bootstrap defaults */
+.form-card .form-control:focus,
+.form-card .form-control-lg:focus {
+    border-color: var(--ink-accent);
+    box-shadow: 0 0 0 0.2rem rgba(61, 126, 166, 0.2);
+}
+
+.form-label {
+    color: var(--ink-text);
+}
+
+/* Footer */
+.site-footer {
+    background: var(--ink-card);
+    border-top: 1px solid var(--ink-border);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.875rem;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons — rely on Bootstrap; subtle primary gradient on main CTAs */
+.btn-primary {
+    background: linear-gradient(180deg, var(--ink-accent) 0%, var(--ink-primary) 100%);
+    border: none;
+    font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: linear-gradient(180deg, #4a8fb8 0%, var(--ink-primary-dark) 100%);
+    border: none;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--ink-primary);
+    --bs-btn-border-color: var(--ink-primary);
+    --bs-btn-hover-bg: var(--ink-primary);
+    --bs-btn-hover-border-color: var(--ink-primary);
+}

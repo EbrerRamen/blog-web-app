@@ -1,0 +1,47 @@
+<% const pageTitle = post.title; const activeNav = ''; %>
+<%- include("partials/header.ejs") %>
+
+<section class="container py-4 py-lg-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Posts</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Article</li>
+                </ol>
+            </nav>
+            <article class="card border-0 shadow-sm post-detail-card">
+                <div class="card-body p-4 p-md-5">
+                    <header class="mb-4">
+                        <h1 class="page-title mb-2"><%= post.title %></h1>
+                        <% if (post.createdAt) { %>
+                            <time class="post-date d-block" datetime="<%= post.createdAt %>">
+                                <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>
+                                <%= formatDate(post.createdAt) %>
+                            </time>
+                        <% } %>
+                    </header>
+                    <div class="post-body">
+                        <%= post.content %>
+                    </div>
+                    <footer class="d-flex flex-wrap align-items-center gap-2 mt-4 pt-4 border-top">
+                        <a href="/" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>All posts
+                        </a>
+                        <a href="/edit/<%= post.id %>" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-pencil me-1" aria-hidden="true"></i>Edit
+                        </a>
+                        <form action="/delete/<%= post.id %>" method="POST" class="d-inline m-0 ms-auto"
+                            onsubmit="return confirm('Delete this post? This cannot be undone.');">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash me-1" aria-hidden="true"></i>Delete
+                            </button>
+                        </form>
+                    </footer>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<%- include("partials/footer.ejs") %>

@@ -1,0 +1,50 @@
+<% const pageTitle = 'Edit post'; const activeNav = ''; %>
+<%- include("partials/header.ejs") %>
+
+<section class="container py-4 py-lg-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Posts</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                </ol>
+            </nav>
+            <div class="card border-0 shadow-sm form-card">
+                <div class="card-body p-4 p-md-5">
+                    <p class="page-eyebrow mb-2">Update entry</p>
+                    <h1 class="page-title h2 mb-1">Edit post</h1>
+                    <% if (post.createdAt) { %>
+                        <p class="post-date mb-2">
+                            <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>
+                            Created <time datetime="<%= post.createdAt %>"><%= formatDate(post.createdAt) %></time>
+                        </p>
+                    <% } %>
+                    <p class="text-muted mb-4">Make changes to your post and save when ready.</p>
+                    <form action="/edit/<%= post.id %>" method="POST" class="needs-validation" novalidate>
+                        <div class="mb-4">
+                            <label for="title" class="form-label fw-semibold">Title</label>
+                            <input type="text" class="form-control form-control-lg" id="title" name="title"
+                                value="<%= post.title %>" required maxlength="120">
+                            <div class="invalid-feedback">Please enter a title.</div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="content" class="form-label fw-semibold">Content</label>
+                            <textarea class="form-control" id="content" name="content" rows="10" required><%= post.content %></textarea>
+                            <div class="invalid-feedback">Please add some content.</div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 pt-2">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-arrow-repeat me-2" aria-hidden="true"></i>Save changes
+                            </button>
+                            <a href="/post/<%= post.id %>" class="btn btn-outline-secondary px-4">View post</a>
+                            <a href="/" class="btn btn-outline-secondary px-4">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include("partials/footer.ejs") %>
